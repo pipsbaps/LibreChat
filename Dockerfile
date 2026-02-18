@@ -3,6 +3,8 @@
 # Base node image
 FROM node:20-alpine AS node
 
+RUN npm install -g bun
+
 # Install jemalloc
 RUN apk add --no-cache jemalloc
 RUN apk add --no-cache python3 py3-pip uv
@@ -37,8 +39,7 @@ RUN \
     npm config set fetch-retry-maxtimeout 600000 ; \
     npm config set fetch-retries 5 ; \
     npm config set fetch-retry-mintimeout 15000 ; \
-    npm ci --no-audit ; \
-    RUN npm install -g bun
+    npm ci --no-audit
 
 COPY --chown=node:node . .
 
